@@ -24,6 +24,7 @@
 	#include "sSdCard.h"
 	#include "sWiFi.h"
 	#include "sMp3.h"
+	#include "sTFTc.h"
 #endif
 
 #define EEPROMADDRESS	0xFF
@@ -242,6 +243,42 @@ int ret = 0;
 }
 
 //**************************************************
+//  Adafruit TFT 2.8'' Touchpanel Capacitive Shield 
+//  を使えるようにします: System.useTFTc
+// System.useTFTc()
+//戻り値
+// 0:使用不可, 1:使用可能
+//**************************************************
+mrb_value mrb_system_useTFTc(mrb_state *mrb, mrb_value self)
+{
+int ret = 0;
+
+#if FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
+	ret = TFTc_Init(mrb);		//Adafruit TFT 2.8'' Touchpanel Capacitive Shield 関連メソッドの設定
+#endif
+
+	return mrb_fixnum_value( ret );
+}
+
+//**************************************************
+//  Adafruit TFT 2.8'' Touchpanel Capacitive Shield 
+//  のインスタンスを解放します: System.clrTFTc
+// System.clrTFTc()
+//戻り値
+// 0: 削除不可 , 1 : 削除済
+//**************************************************
+mrb_value mrb_system_clrTFTc(mrb_state *mrb, mrb_value self)
+{
+int ret = 0;
+
+#if FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
+	ret = TFTc_Clear(mrb);		//Adafruit TFT 2.8'' Touchpanel Capacitive Shield 関連インスタンスの開放
+#endif
+
+	return mrb_fixnum_value( ret );
+}
+
+//**************************************************
 // ライブラリを定義します
 //**************************************************
 void sys_Init(mrb_state *mrb)
@@ -261,6 +298,8 @@ void sys_Init(mrb_state *mrb)
 	mrb_define_module_function(mrb, systemModule, "useSD", mrb_system_useSD, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, systemModule, "useWiFi", mrb_system_useWiFi, MRB_ARGS_NONE());
 	mrb_define_module_function(mrb, systemModule, "useMP3", mrb_system_useMp3, MRB_ARGS_OPT(2));
+	mrb_define_module_function(mrb, systemModule, "useTFTc", mrb_system_useTFTc, MRB_ARGS_NONE());
+	mrb_define_module_function(mrb, systemModule, "clrTFTc", mrb_system_clrTFTc, MRB_ARGS_NONE());
 
 	mrb_define_module_function(mrb, systemModule, "getMrbPath", mrb_system_getmrbpath, MRB_ARGS_NONE());
 }

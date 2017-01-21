@@ -1,0 +1,136 @@
+■D:\codes\GNURX\wrbb-v2lib-firm\firmware\wrbb_mrubyに、 sTFTc.cpp を追加
+
+■D:\codes\GNURX\wrbb-v2lib-firm\firmware\wrbb_mrubyに、 sTFTc.h を追加
+
+■D:\codes\GNURX\wrbb-v2lib-firm\firmware\wrbb_mruby\sSys.cpp に、下記変更を追加
+
+
+*** line 27 add：
+	#include "sTFTc.h"
+
+
+*** line 245 add:
+//**************************************************
+//  Adafruit TFT 2.8'' Touchpanel Capacitive Shield 
+//  を使えるようにします: System.useTFTc
+// System.useTFTc()
+//戻り値
+// 0:使用不可, 1:使用可能
+//**************************************************
+mrb_value mrb_system_useTFTc(mrb_state *mrb, mrb_value self)
+{
+int ret = 0;
+
+#if FIRMWARE == SDWF || BOARD == BOARD_P05 || BOARD == BOARD_P06
+	ret = TFTc_Init(mrb);		//Adafruit TFT 2.8'' Touchpanel Capacitive Shield 関連メソッドの設定
+#endif
+
+	return mrb_fixnum_value( ret );
+}
+
+
+*** line 283 add:
+	mrb_define_module_function(mrb, systemModule, "useTFTc", mrb_system_useTFTc, MRB_ARGS_NONE());
+
+
+■D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\libに、下記フォルダを追加
+GFX
+TFT
+
+■D:\codes\GNURX\masterK2TFT3\gr_common\lib\GFX に、下記ファイルを追加
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\glcdfont.o
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Adafruit_GFX.cpp
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Adafruit_GFX.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Adafruit_GFX.o
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\gfxfont.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\glcdfont.c
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\TomThumb.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMono9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMono12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMono18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMono24pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoBold9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoBold12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoBold18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoBold24pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoBoldOblique9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoBoldOblique12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoBoldOblique18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoBoldOblique24pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoOblique9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoOblique12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoOblique18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeMonoOblique24pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSans9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSans12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSans18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSans24pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansBold9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansBold12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansBold18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansBold24pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansBoldOblique9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansBoldOblique12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansBoldOblique18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansBoldOblique24pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansOblique9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansOblique12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansOblique18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSansOblique24pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerif9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerif12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerif18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerif24pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifBold9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifBold12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifBold18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifBold24pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifBoldItalic9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifBoldItalic12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifBoldItalic18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifBoldItalic24pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifItalic9pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifItalic12pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifItalic18pt7b.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\GFX\Fonts\FreeSerifItalic24pt7b.h
+
+■D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\TFT に下記ファイルを追加
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\TFT\Adafruit_FT6206.cpp
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\TFT\Adafruit_FT6206.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\TFT\Adafruit_FT6206.o
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\TFT\Adafruit_ILI9341.cpp
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\TFT\Adafruit_ILI9341.h
+D:\codes\GNURX\wrbb-v2lib-firm\firmware\gr_common\lib\TFT\Adafruit_ILI9341.o
+
+
+■makefile 変更：
+*** SRCFILE　に)以下を追加
+line 4 : 行末に \を追加して改行
+
+***
+line 5 : add
+./wrbb_mruby/sTFTc.cpp ./gr_common/lib/TFT/Adafruit_ILI9341.cpp ./gr_common/lib/TFT/Adafruit_FT6206.cpp ./gr_common/lib/GFX/glcdfont.c ./gr_common/lib/GFX/Adafruit_GFX.cpp
+
+*** OBJFILES　に以下を追加
+line 21: add
+	./wrbb_mruby/sTFTc.o \
+***
+line 24: 行末に \ をつけて改行
+
+***
+line 25: add
+./gr_common/lib/TFT/Adafruit_ILI9341.o ./gr_common/lib/TFT/Adafruit_FT6206.o ./gr_common/lib/GFX/glcdfont.o ./gr_common/lib/GFX/Adafruit_GFX.o
+
+*** CCINC　に以下を追加
+line 29: 行末に \ をつけて改行
+
+***
+line 30: add
+	-I./gr_common/lib/GFX -I./gr_common/lib/TFT
+
+*** HEADERFILES　に以下を追加
+line 34: 行末に \ をつけて改行
+
+***
+line 35: add
+./wrbb_mruby/sTFTc.h ./gr_common/lib/TFT/Adafruit_ILI9341.h ./gr_common/lib/TFT/Adafruit_FT6206.h ./gr_common/lib/GFX/gfxfont.h ./gr_common/lib/GFX/Adafruit_GFX.h
